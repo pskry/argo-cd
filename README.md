@@ -1,1 +1,1 @@
-# ArgoCD root
+# ArgoCD sync root

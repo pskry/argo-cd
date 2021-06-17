@@ -12,8 +12,7 @@ spec:
     path: alpine
     targetRevision: HEAD
     helm:
-      valueFiles:
-        - demo-values.yml
+      releaseName: helm-test
   destination:
     namespace: sample-app
     server: https://kubernetes.default.svc

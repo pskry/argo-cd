@@ -13,6 +13,9 @@ spec:
     targetRevision: HEAD
     helm:
       releaseName: helm-test
+      values: |
+        image:
+          repository: alpine
   destination:
     namespace: sample-app
     server: https://kubernetes.default.svc

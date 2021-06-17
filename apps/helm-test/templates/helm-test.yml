@@ -8,8 +8,8 @@ metadata:
 spec:
   project: sample-project
   source:
-    repoURL: https://charts.bitnami.com
-    path: bitnami/apache
+    repoURL: https://github.com/wenerme/charts
+    path: grafana
     targetRevision: HEAD
     helm:
       releaseName: helm-test

@@ -15,7 +15,7 @@ spec:
       releaseName: helm-test
       values: |
         image:
-          repository: alpine
+          repository: nginx
   destination:
     namespace: sample-app
     server: https://kubernetes.default.svc

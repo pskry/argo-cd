@@ -8,14 +8,11 @@ metadata:
 spec:
   project: sample-project
   source:
-    repoURL: https://github.com/wenerme/charts
-    path: alpine
+    repoURL: https://charts.bitnami.com
+    path: bitnami/apache
     targetRevision: HEAD
     helm:
       releaseName: helm-test
-      values: |
-        image:
-          repository: arm64v8/alpine
   destination:
     namespace: sample-app
     server: https://kubernetes.default.svc

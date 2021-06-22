@@ -26,6 +26,9 @@ argo-cd:
         - type: helm
           name: argo-cd
           url: https://argoproj.github.io/argo-helm
+        - type: helm
+          name: redis-ha
+          url: https://dandydeveloper.github.io/charts
     additionalApplications:
       - name: argocd-apps
         namespace: argocd

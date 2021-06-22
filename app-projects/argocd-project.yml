@@ -2,10 +2,10 @@ apiVersion: argoproj.io/v1alpha1
 kind: AppProject
 metadata:
   name: argocd2
-  namespace: argocd2
+  namespace: argocd
 spec:
   name: argocd2
-  namespace: argocd2
+  namespace: argocd
   additionalLabels: { }
   additionalAnnotations: { }
   description: ArgoCD Project

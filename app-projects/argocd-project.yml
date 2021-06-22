@@ -3,8 +3,6 @@ kind: AppProject
 metadata:
   name: argocd2
   namespace: argocd
-  additionalLabels: { }
-  additionalAnnotations: { }
 spec:
   description: ArgoCD Project
   sourceRepos:

@@ -8,14 +8,12 @@ metadata:
 spec:
   project: argocd
   source:
-    repoURL: https://github.com/argoproj/argo-helm
+    repoURL: https://github.com/pskry/argo-cd
     path: charts/argo-cd
     targetRevision: HEAD
-    helm:
-      releaseName: argo-cd
   destination:
-    namespace: argocd
     server: https://kubernetes.default.svc
+    namespace: argocd
   syncPolicy:
     syncOptions:
       - CreateNamespace=true

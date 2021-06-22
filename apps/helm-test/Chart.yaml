@@ -1,4 +1,0 @@
-apiVersion: v1
-name: helm-test
-version: 1.0
-description: helm-test chart

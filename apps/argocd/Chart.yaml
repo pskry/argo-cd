@@ -1,0 +1,4 @@
+apiVersion: v1
+name: argocd-helm
+version: 1.0
+description: Helm chart to install and manage Argo CD

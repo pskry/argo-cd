@@ -1,74 +1,79 @@
-global:
-  image:
-    repository: docker.io/alinbalutoiu/argocd
-server:
-  extraArgs:
-    - "--insecure"
-  ingress:
-    enabled: true
-    annotations:
-      cert-manager.io/issuer: "letsencrypt-stg"
-      cert-manager.io/issuer-kind: ClusterIssuer
-    hosts:
-      - argocd.skrypalle.dk
-    tls:
-      - hosts:
-          - argocd.skrypalle.dk
-        secretName: tls-argocd-server-ingress
-  configEnabled: true
-  config:
-#    url: https://argocd.skrypalle.dk
-    repositories: |
-      - type: git
-        url: https://github.com/pskry/argo-cd.git
-  additionalApplications:
-    - name: argocd-apps
-      namespace: argocd
-      destination:
+argo-cd:
+  global:
+    installCRDs: false
+    image:
+      repository: docker.io/alinbalutoiu/argocd
+  server:
+    extraArgs:
+      - "--insecure"
+    ingress:
+      enabled: true
+      annotations:
+        cert-manager.io/issuer: "letsencrypt-stg"
+        cert-manager.io/issuer-kind: ClusterIssuer
+      hosts:
+        - argocd.skrypalle.dk
+      tls:
+        - hosts:
+            - argocd.skrypalle.dk
+          secretName: tls-argocd-server-ingress
+    configEnabled: true
+    config:
+  #    url: https://argocd.skrypalle.dk
+      repositories: |
+        - type: git
+          url: https://github.com/pskry/argo-cd.git
+        - type: helm
+          name: argo-cd
+          url: https://argoproj.github.io/argo-helm
+    additionalApplications:
+      - name: argocd-apps
         namespace: argocd
-        server: https://kubernetes.default.svc
-      project: argocd
-      source:
-        path: apps
-        repoURL: https://github.com/pskry/argo-cd.git
-        targetRevision: HEAD
-        directory:
-          recurse: true
-          jsonnet: { }
-      syncPolicy:
-        automated:
-          selfHeal: true
-          prune: true
-    - name: argocd-app-projects
-      namespace: argocd
-      destination:
-        namespace: argocd
-        server: https://kubernetes.default.svc
-      project: argocd
-      source:
-        path: app-projects
-        repoURL: https://github.com/pskry/argo-cd.git
-        targetRevision: HEAD
-        directory:
-          recurse: true
-          jsonnet: { }
-      syncPolicy:
-        automated:
-          selfHeal: true
-          prune: true
-  additionalProjects:
-    - name: argocd
-      namespace: argocd
-      additionalLabels: { }
-      additionalAnnotations: { }
-      description: ArgoCD Project
-      sourceRepos:
-        - '*'
-      destinations:
-        - namespace: argocd
+        destination:
+          namespace: argocd
           server: https://kubernetes.default.svc
-      clusterResourceWhitelist:
-        - group: '*'
-          kind: '*'
-      orphanedResources:
-        warn: false
+        project: argocd
+        source:
+          path: apps
+          repoURL: https://github.com/pskry/argo-cd.git
+          targetRevision: HEAD
+          directory:
+            recurse: true
+            jsonnet: { }
+        syncPolicy:
+          automated:
+            selfHeal: true
+            prune: true
+      - name: argocd-app-projects
+        namespace: argocd
+        destination:
+          namespace: argocd
+          server: https://kubernetes.default.svc
+        project: argocd
+        source:
+          path: app-projects
+          repoURL: https://github.com/pskry/argo-cd.git
+          targetRevision: HEAD
+          directory:
+            recurse: true
+            jsonnet: { }
+        syncPolicy:
+          automated:
+            selfHeal: true
+            prune: true
+    additionalProjects:
+      - name: argocd
+        namespace: argocd
+        additionalLabels: { }
+        additionalAnnotations: { }
+        description: ArgoCD Project
+        sourceRepos:
+          - '*'
+        destinations:
+          - namespace: argocd
+            server: https://kubernetes.default.svc
+        clusterResourceWhitelist:
+          - group: '*'
+            kind: '*'
+        orphanedResources:
+          warn: false

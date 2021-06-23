@@ -10,6 +10,8 @@ spec:
   destinations:
     - namespace: grafana
       server: https://kubernetes.default.svc
+    - namespace: prometheus
+      server: https://kubernetes.default.svc
   orphanedResources:
     warn: false
   sourceRepos:

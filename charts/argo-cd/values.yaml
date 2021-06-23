@@ -62,17 +62,3 @@ argo-cd:
           automated:
             selfHeal: true
             prune: true
-    additionalProjects:
-      - name: argocd-project
-        namespace: argocd
-        description: ArgoCD Project
-        sourceRepos:
-          - '*'
-        destinations:
-          - namespace: argocd
-            server: https://kubernetes.default.svc
-        clusterResourceWhitelist:
-          - group: '*'
-            kind: '*'
-        orphanedResources:
-          warn: false

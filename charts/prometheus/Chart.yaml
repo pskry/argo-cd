@@ -3,7 +3,7 @@ name: prometheus
 version: 1.0
 description: Helm chart to manage cluster monitoring
 dependencies:
-  - name: prometheus-community
+  - name: prometheus
     version: 14.2.1
     repository: https://prometheus-community.github.io/helm-charts
   - name: kube-state-metrics

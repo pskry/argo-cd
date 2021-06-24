@@ -1,12 +1,13 @@
-server:
-  ingress:
-    enabled: true
-    annotations:
-      cert-manager.io/issuer: "letsencrypt-stg"
-      cert-manager.io/issuer-kind: ClusterIssuer
-    hosts:
-      - prometheus.skrypalle.dk
-    tls:
-      - hosts:
-          - prometheus.skrypalle.dk
-        secretName: tls-prometheus-server-ingress
+prometheus:
+  server:
+    ingress:
+      enabled: true
+      annotations:
+        cert-manager.io/issuer: "letsencrypt-stg"
+        cert-manager.io/issuer-kind: ClusterIssuer
+      hosts:
+        - prometheus.skrypalle.dk
+      tls:
+        - hosts:
+            - prometheus.skrypalle.dk
+          secretName: tls-prometheus-server-ingress

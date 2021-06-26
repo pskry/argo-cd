@@ -1,13 +1,12 @@
 grafana:
-  server:
-    ingress:
-      enabled: true
-      annotations:
-        cert-manager.io/issuer: "letsencrypt-stg"
-        cert-manager.io/issuer-kind: ClusterIssuer
-      hosts:
-        - grafana.skrypalle.dk
-      tls:
-        - hosts:
-            - grafana.skrypalle.dk
-          secretName: tls-grafana-server-ingress
+  ingress:
+    enabled: true
+    annotations:
+      cert-manager.io/issuer: "letsencrypt-stg"
+      cert-manager.io/issuer-kind: ClusterIssuer
+    hosts:
+      - grafana.skrypalle.dk
+    tls:
+      - hosts:
+          - grafana.skrypalle.dk
+        secretName: tls-grafana-server-ingress

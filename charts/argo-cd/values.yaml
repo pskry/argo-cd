@@ -19,7 +19,7 @@ argo-cd:
           secretName: tls-argocd-server-ingress
     configEnabled: true
     config:
-  #    url: https://argocd.skrypalle.dk
+      url: https://argocd.skrypalle.dk
       repositories: |
         - type: git
           url: https://github.com/pskry/argo-cd.git

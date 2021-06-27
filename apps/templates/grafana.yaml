@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: prometheus
+  name: grafana
   namespace: argocd
   finalizers:
     - resources-finalizer.argocd.argoproj.io
@@ -9,11 +9,11 @@ spec:
   project: monitoring
   source:
     repoURL: https://github.com/pskry/argo-cd
-    path: charts/prometheus
+    path: charts/grafana
     targetRevision: HEAD
   destination:
     server: https://kubernetes.default.svc
-    namespace: prometheus
+    namespace: monitoring
   syncPolicy:
     syncOptions:
       - CreateNamespace=true

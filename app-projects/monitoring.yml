@@ -8,9 +8,7 @@ spec:
     - group: '*'
       kind: '*'
   destinations:
-    - namespace: grafana
-      server: https://kubernetes.default.svc
-    - namespace: prometheus
+    - namespace: monitoring
       server: https://kubernetes.default.svc
     - namespace: kube-system
       server: https://kubernetes.default.svc

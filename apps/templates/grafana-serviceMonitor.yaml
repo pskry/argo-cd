@@ -3,6 +3,8 @@ kind: ServiceMonitor
 metadata:
   name: grafana-svc-monitor
   namespace: monitoring
+  labels:
+    testlabel: testvalue
 spec:
   endpoints:
   - interval: 15s

@@ -1,0 +1,14 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: grafana
+  namespace: testy-dev1
+spec:
+  rules:
+  - host: grafana.skrypalle.dk
+    http:
+      paths:
+      - backend:
+          serviceName: grafana
+          servicePort: http
+        path: /

@@ -1,0 +1,14 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: prometheus-k8s
+  namespace: testy-dev1
+spec:
+  rules:
+  - host: prometheus.skrypalle.dk
+    http:
+      paths:
+      - backend:
+          serviceName: prometheus-k8s
+          servicePort: web
+        path: /

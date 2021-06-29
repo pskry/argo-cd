@@ -67,7 +67,7 @@ argo-cd:
         destination:
           namespace: testy-dev1
           server: https://kubernetes.default.svc
-        project: argocd-project
+        project: testy-dev1
         source:
           path: testy-dev1
           repoURL: https://github.com/pskry/argo-cd.git

@@ -1,0 +1,4 @@
+apiVersion: v2
+name: testy-dev1
+version: 1.0
+description: testy-dev1 root chart

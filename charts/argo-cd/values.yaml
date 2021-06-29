@@ -62,6 +62,22 @@ argo-cd:
           automated:
             selfHeal: true
             prune: true
+      - name: testy-dev1
+        namespace: testy-dev1
+        destination:
+          namespace: testy-dev1
+          server: https://kubernetes.default.svc
+        project: argocd-project
+        source:
+          path: testy-dev1
+          repoURL: https://github.com/pskry/argo-cd.git
+          targetRevision: HEAD
+          directory:
+            recurse: true
+        syncPolicy:
+          automated:
+            selfHeal: true
+            prune: true
     additionalProjects:
       - name: argocd-project
         namespace: argocd

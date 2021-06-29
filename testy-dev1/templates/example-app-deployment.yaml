@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: example-app
-          image: fabxc/instrumented_app
+          image: maier/instrumented_app-arm64
           ports:
             - name: web
               containerPort: 8080

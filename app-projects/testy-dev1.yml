@@ -9,7 +9,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: AppProject
 metadata:
   name: testy-dev1
-  namespace: argocd
+  namespace: testy-dev1
 spec:
   clusterResourceWhitelist:
     - group: '*'

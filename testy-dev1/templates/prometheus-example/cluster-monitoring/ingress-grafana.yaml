@@ -1,0 +1,20 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: grafana
+  namespace: testy-dev1
+  annotations:
+    cert-manager.io/issuer: letsencrypt-stg
+    cert-manager.io/issuer-kind: ClusterIssuer
+spec:
+  rules:
+  - host: grafana-op.skrypalle.dk
+    http:
+      paths:
+      - backend:
+          serviceName: grafana
+          servicePort: http
+        path: /
+  tls:
+  - hosts:
+    - grafana-op.skrypalle.dk

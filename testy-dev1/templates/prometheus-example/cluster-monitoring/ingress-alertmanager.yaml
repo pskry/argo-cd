@@ -1,0 +1,21 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: alertmanager-main
+  namespace: testy-dev1
+  annotations:
+    cert-manager.io/issuer: letsencrypt-stg
+    cert-manager.io/issuer-kind: ClusterIssuer
+spec:
+  rules:
+  - host: alertmanager.skrypalle.dk
+    http:
+      paths:
+      - backend:
+          serviceName: alertmanager-main
+          servicePort: web
+        path: /
+  tls:
+  - hosts:
+    - alertmanager.skrypalle.dk
+

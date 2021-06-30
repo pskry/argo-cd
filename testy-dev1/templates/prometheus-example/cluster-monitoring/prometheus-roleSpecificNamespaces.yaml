@@ -4,7 +4,7 @@ items:
   kind: Role
   metadata:
     name: prometheus-k8s
-    namespace: testy-dev1
+    namespace: default
   rules:
   - apiGroups:
     - ""

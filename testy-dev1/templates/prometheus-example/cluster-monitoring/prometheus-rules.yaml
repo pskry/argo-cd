@@ -1732,3 +1732,23 @@ spec:
       for: 15m
       labels:
         severity: critical
+    - alert: PrometheusRemoteWriteDesiredShards
+      annotations:
+        description: Prometheus {{ "{{" }}$labels.namespace{{ "}}" }}/{{ "{{" }}$labels.pod{{ "}}" }} remote write
+          desired shards calculation wants to run {{ "{{" }} $value {{ "}}" }} shards for queue {{ "{{" }}
+          $labels.remote_name{{ "}}" }}:{{ "{{" }} $labels.url {{ "}}" }}, which is more than the max of {{
+          printf `prometheus_remote_storage_shards_max{instance="%s",job="prometheus-k8s",namespace="testy-dev1"}`
+          $labels.instance | query | first | value }}.
+        summary: Prometheus remote write desired shards calculation wants to run more
+          than configured max shards.
+      expr: |
+        # Without max_over_time, failed scrapes could create false negatives, see
+        # https://www.robustperception.io/alerting-on-gauges-in-prometheus-2-0 for details.
+        (
+          max_over_time(prometheus_remote_storage_shards_desired{job="prometheus-k8s",namespace="testy-dev1"}[5m])
+        >
+          max_over_time(prometheus_remote_storage_shards_max{job="prometheus-k8s",namespace="testy-dev1"}[5m])
+        )
+      for: 15m
+      labels:
+        severity: warning

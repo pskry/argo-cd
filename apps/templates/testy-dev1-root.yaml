@@ -16,7 +16,7 @@ spec:
     namespace: testy-dev1
   syncPolicy:
     syncOptions:
-      - CreateNamespace=true
+      - ApplyOutOfSyncOnly=true
     automated:
       selfHeal: true
       prune: true

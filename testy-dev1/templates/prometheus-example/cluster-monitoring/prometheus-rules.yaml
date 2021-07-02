@@ -1736,9 +1736,9 @@ spec:
       annotations:
         description: Prometheus {{ "{{" }}$labels.namespace{{ "}}" }}/{{ "{{" }}$labels.pod{{ "}}" }} remote write
           desired shards calculation wants to run {{ "{{" }} $value {{ "}}" }} shards for queue {{ "{{" }}
-          $labels.remote_name{{ "}}" }}:{{ "{{" }} $labels.url {{ "}}" }}, which is more than the max of {{
+          $labels.remote_name{{ "}}" }}:{{ "{{" }} $labels.url {{ "}}" }}, which is more than the max of {{ "{{" }}
           printf `prometheus_remote_storage_shards_max{instance="%s",job="prometheus-k8s",namespace="testy-dev1"}`
-          $labels.instance | query | first | value }}.
+          $labels.instance | query | first | value {{ "}}" }}.
         summary: Prometheus remote write desired shards calculation wants to run more
           than configured max shards.
       expr: |
@@ -1749,6 +1749,26 @@ spec:
         >
           max_over_time(prometheus_remote_storage_shards_max{job="prometheus-k8s",namespace="testy-dev1"}[5m])
         )
+      for: 15m
+      labels:
+        severity: warning
+    - alert: PrometheusRuleFailures
+      annotations:
+        description: Prometheus {{ "{{" }}$labels.namespace{{ "}}" }}/{{ "{{" }}$labels.pod{{ "}}" }} has failed to
+          evaluate {{ "{{" }} printf "%.0f" $value {{ "}}" }} rules in the last 5m.
+        summary: Prometheus is failing rule evaluations.
+      expr: |
+        increase(prometheus_rule_evaluation_failures_total{job="prometheus-k8s",namespace="testy-dev1"}[5m]) > 0
+      for: 15m
+      labels:
+        severity: critical
+    - alert: PrometheusMissingRuleEvaluations
+      annotations:
+        description: Prometheus {{ "{{" }}$labels.namespace{{ "}}" }}/{{ "{{" }}$labels.pod{{ "}}" }} has missed {{ "{{" }}
+          printf "%.0f" $value {{ "}}" }} rule group evaluations in the last 5m.
+        summary: Prometheus is missing rule evaluations due to slow rule group evaluation.
+      expr: |
+        increase(prometheus_rule_group_iterations_missed_total{job="prometheus-k8s",namespace="testy-dev1"}[5m]) > 0
       for: 15m
       labels:
         severity: warning

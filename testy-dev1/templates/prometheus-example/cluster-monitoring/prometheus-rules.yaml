@@ -1652,3 +1652,65 @@ spec:
       for: 4h
       labels:
         severity: warning
+    - alert: PrometheusTSDBCompactionsFailing
+      annotations:
+        description: Prometheus {{ "{{" }}$labels.namespace{{ "}}" }}/{{ "{{" }}$labels.pod{{ "}}" }} has detected
+          {{ "{{" }}$value | humanize{{ "}}" }} compaction failures over the last 3h.
+        summary: Prometheus has issues compacting blocks.
+      expr: |
+        increase(prometheus_tsdb_compactions_failed_total{job="prometheus-k8s",namespace="testy-dev1"}[3h]) > 0
+      for: 4h
+      labels:
+        severity: warning
+    - alert: PrometheusNotIngestingSamples
+      annotations:
+        description: Prometheus {{ "{{" }}$labels.namespace{{ "}}" }}/{{ "{{" }}$labels.pod{{ "}}" }} is not ingesting
+          samples.
+        summary: Prometheus is not ingesting samples.
+      expr: |
+        rate(prometheus_tsdb_head_samples_appended_total{job="prometheus-k8s",namespace="testy-dev1"}[5m]) <= 0
+      for: 10m
+      labels:
+        severity: warning
+    - alert: PrometheusDuplicateTimestamps
+      annotations:
+        description: Prometheus {{ "{{" }}$labels.namespace{{ "}}" }}/{{ "{{" }}$labels.pod{{ "}}" }} is dropping
+          {{ "{{" }} printf "%.4g" $value  {{ "}}" }} samples/s with different values but duplicated
+          timestamp.
+        summary: Prometheus is dropping samples with duplicate timestamps.
+      expr: |
+        rate(prometheus_target_scrapes_sample_duplicate_timestamp_total{job="prometheus-k8s",namespace="testy-dev1"}[5m]) > 0
+      for: 10m
+      labels:
+        severity: warning
+    - alert: PrometheusOutOfOrderTimestamps
+      annotations:
+        description: Prometheus {{ "{{" }}$labels.namespace{{ "}}" }}/{{ "{{" }}$labels.pod{{ "}}" }} is dropping
+          {{ "{{" }} printf "%.4g" $value  {{ "}}" }} samples/s with timestamps arriving out of order.
+        summary: Prometheus drops samples with out-of-order timestamps.
+      expr: |
+        rate(prometheus_target_scrapes_sample_out_of_order_total{job="prometheus-k8s",namespace="testy-dev1"}[5m]) > 0
+      for: 10m
+      labels:
+        severity: warning
+    - alert: PrometheusRemoteStorageFailures
+      annotations:
+        description: Prometheus {{ "{{" }}$labels.namespace{{ "}}" }}/{{ "{{" }}$labels.pod{{ "}}" }} failed to send
+          {{ "{{" }} printf "%.1f" $value {{ "}}" }}% of the samples to {{ "{{" }} $labels.remote_name{{ "}}" }}:{{ "{{" }}
+          $labels.url {{ "}}" }}
+        summary: Prometheus fails to send samples to remote storage.
+      expr: |
+        (
+          rate(prometheus_remote_storage_failed_samples_total{job="prometheus-k8s",namespace="testy-dev1"}[5m])
+        /
+          (
+            rate(prometheus_remote_storage_failed_samples_total{job="prometheus-k8s",namespace="testy-dev1"}[5m])
+          +
+            rate(prometheus_remote_storage_succeeded_samples_total{job="prometheus-k8s",namespace="testy-dev1"}[5m])
+          )
+        )
+        * 100
+        > 1
+      for: 15m
+      labels:
+        severity: critical

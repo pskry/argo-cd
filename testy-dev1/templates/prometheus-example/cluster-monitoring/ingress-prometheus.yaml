@@ -8,7 +8,7 @@ metadata:
     cert-manager.io/issuer-kind: ClusterIssuer
 spec:
   rules:
-  - host: prometheus-op.skrypalle.dk
+  - host: prometheus.skrypalle.dk
     http:
       paths:
       - backend:
@@ -17,4 +17,4 @@ spec:
         path: /
   tls:
   - hosts:
-    - prometheus-op.skrypalle.dk
+    - prometheus.skrypalle.dk

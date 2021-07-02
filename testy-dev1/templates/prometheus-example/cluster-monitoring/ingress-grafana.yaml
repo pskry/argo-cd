@@ -8,7 +8,7 @@ metadata:
     cert-manager.io/issuer-kind: ClusterIssuer
 spec:
   rules:
-  - host: grafana-op.skrypalle.dk
+  - host: grafana.skrypalle.dk
     http:
       paths:
       - backend:
@@ -17,4 +17,4 @@ spec:
         path: /
   tls:
   - hosts:
-    - grafana-op.skrypalle.dk
+    - grafana.skrypalle.dk
